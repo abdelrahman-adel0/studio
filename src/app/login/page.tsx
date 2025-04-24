@@ -5,13 +5,26 @@ import {useRouter} from 'next/navigation';
 import {Button} from '@/components/ui/button';
 import {Card, CardContent, CardHeader, CardTitle} from '@/components/ui/card';
 import {Input} from '@/components/ui/input';
-import { useToast } from "@/hooks/use-toast"
+import {useToast} from "@/hooks/use-toast"
 
 const LoginPage = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const {toast} = useToast();
   const router = useRouter();
-  const { toast } = useToast(); // Always call the hook
+
+  useEffect(() => {
+    // Check if the user is already logged in
+    const checkLoggedIn = () => {
+      const user = localStorage.getItem('user');
+      if (user === 'admin') {
+        router.push('/admin');
+      }
+    };
+
+    checkLoggedIn();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
 
   const handleSubmit = async (e: React.FormEvent) => {
