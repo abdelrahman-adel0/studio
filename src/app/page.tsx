@@ -45,6 +45,12 @@ const data = [
   {name: 'Jul', value: 349},
 ];
 
+const chartConfig = {
+  value: {
+    label: 'Value',
+  },
+};
+
 export default function Home() {
   const [maintenanceMode, setMaintenanceMode] = useState(false);
   const [selectedMenuItem, setSelectedMenuItem] = useState('Overview');
@@ -168,15 +174,17 @@ export default function Home() {
                   <CardDescription>Website traffic over the last 7 days.</CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <ResponsiveContainer width="100%" height={300}>
-                    <AreaChart data={data} margin={{top: 10, right: 30, left: 0, bottom: 0}}>
-                      <CartesianGrid strokeDasharray="3 3" />
-                      <XAxis dataKey="name" />
-                      <YAxis />
-                      <Tooltip content={<ChartTooltipContent />} />
-                      <Area type="monotone" dataKey="value" stroke="#8884d8" fill="#8884d8" />
-                    </AreaChart>
-                  </ResponsiveContainer>
+                  <ChartContainer config={chartConfig}>
+                    <ResponsiveContainer width="100%" height={300}>
+                      <AreaChart data={data} margin={{top: 10, right: 30, left: 0, bottom: 0}}>
+                        <CartesianGrid strokeDasharray="3 3" />
+                        <XAxis dataKey="name" />
+                        <YAxis />
+                        <Tooltip content={<ChartTooltipContent />} />
+                        <Area type="monotone" dataKey="value" stroke="#8884d8" fill="#8884d8" />
+                      </AreaChart>
+                    </ResponsiveContainer>
+                  </ChartContainer>
                 </CardContent>
               </Card>
 
