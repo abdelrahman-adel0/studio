@@ -5,21 +5,41 @@ import {useRouter} from 'next/navigation';
 import {Button} from '@/components/ui/button';
 import {Card, CardContent, CardHeader, CardTitle} from '@/components/ui/card';
 import {Input} from '@/components/ui/input';
+import { useToast } from "@/hooks/use-toast"
 
 const LoginPage = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const router = useRouter();
+    const { toast } = useToast()
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // For demonstration, let's just check if the username is "admin" and password isn't empty.
+    // Basic validation
+    if (!username || !password) {
+      toast({
+        title: "Login Error",
+        description: "Please enter both username and password.",
+        variant: "destructive",
+      })
+      return;
+    }
+
+    // For demonstration, check if the username is "admin" and password isn't empty.
     if (username === 'admin' && password !== '') {
       localStorage.setItem('user', 'admin');
       router.push('/admin');
+      toast({
+        title: "Login Successful",
+        description: "Successfully logged in as admin.",
+      })
     } else {
-      alert('Invalid credentials');
+      toast({
+        title: "Login Error",
+        description: "Invalid credentials. Please try again.",
+        variant: "destructive",
+      })
     }
   };
 
