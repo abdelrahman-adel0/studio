@@ -28,7 +28,12 @@ const AdminDashboardPage = () => {
       try {
         const response = await fetch('/api/admin/stats');
         if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
+          if (response.status === 502) {
+             setError('Failed to fetch stats. The server is temporarily unavailable (502 Bad Gateway). Please try again later.');
+          } else {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          return;
         }
 
         const text = await response.text();
@@ -46,8 +51,8 @@ const AdminDashboardPage = () => {
         setLoading(false);
       }
     };
-    if(isAdmin) fetchStats();
-  }, [isAdmin]); 
+    if(isAdmin.isAdmin) fetchStats();
+  }, [isAdmin.isAdmin]); 
 
   const toggleMaintenanceMode = async () => {
     setMaintenanceMode(prev => !prev);
@@ -67,7 +72,7 @@ const AdminDashboardPage = () => {
    
   };
   
-  if (!isAdmin) {  
+  if (!isAdmin.isAdmin) {  
     return (
       <div className="flex flex-col items-center justify-center min-h-screen p-4">
         <h1 className="text-2xl font-bold mb-4">403 - Access Denied</h1>
@@ -87,7 +92,7 @@ const AdminDashboardPage = () => {
       </Alert>
       )}
 
-      {loading ? (
+      {isAdmin.isLoading ? (
         <div>Loading stats...</div>
       ) : (
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 p-4 w-full max-w-7xl">

@@ -11,7 +11,7 @@ function useAdmin() {
         if (user) {
           try {
             const parsedUser = JSON.parse(user);
-            setIsAdmin(parsedUser?.admin || false); // Safely access admin property
+            setIsAdmin(parsedUser?.admin === true); // Check if admin is exactly true
           } catch (parseError) {
             console.error('Error parsing user data from localStorage:', parseError);
             setIsAdmin(false);

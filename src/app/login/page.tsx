@@ -28,14 +28,14 @@ const LoginPage = () => {
 
     // For demonstration, check if the username is "admin".
     if (username === 'admin') {
-      localStorage.setItem('user', JSON.stringify({admin: true}));
+      localStorage.setItem('user', JSON.stringify({ admin: true }));
       toast({
         title: "Login Successful",
         description: "Successfully logged in as admin.",
       });
       router.push('/admin');
     } else {
-      localStorage.setItem('user', JSON.stringify({admin: false}));
+      localStorage.setItem('user', JSON.stringify({ admin: false }));
        toast({
          title: "Login Successful",
          description: "Successfully logged in.",
