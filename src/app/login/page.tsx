@@ -1,6 +1,6 @@
 'use client';
 
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import {useRouter} from 'next/navigation';
 import {Button} from '@/components/ui/button';
 import {Card, CardContent, CardHeader, CardTitle} from '@/components/ui/card';
@@ -11,7 +11,8 @@ const LoginPage = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const router = useRouter();
-    const { toast } = useToast()
+  const { toast } = useToast(); // Always call the hook
+
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -22,7 +23,7 @@ const LoginPage = () => {
         title: "Login Error",
         description: "Please enter both username and password.",
         variant: "destructive",
-      })
+      });
       return;
     }
 
@@ -33,13 +34,13 @@ const LoginPage = () => {
       toast({
         title: "Login Successful",
         description: "Successfully logged in as admin.",
-      })
+      });
     } else {
       toast({
         title: "Login Error",
         description: "Invalid credentials. Please try again.",
         variant: "destructive",
-      })
+      });
     }
   };
 
