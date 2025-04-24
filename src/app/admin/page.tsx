@@ -30,8 +30,15 @@ const AdminDashboardPage = () => {
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
-        const data: Stats = await response.json();
-        setStats(data);
+
+        const text = await response.text();
+        try {
+          const data: Stats = JSON.parse(text);
+          setStats(data);
+        } catch (jsonError) {
+          console.error('Error parsing JSON:', jsonError);
+          setError('Failed to parse stats data.');
+        }
       } catch (error: any) {
         console.error('Error fetching stats:', error);
         setError(`Failed to fetch stats. Error: ${error.message || 'Unknown error'}`);

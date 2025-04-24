@@ -17,29 +17,30 @@ const LoginPage = () => {
     e.preventDefault();
 
     // Basic validation
-    if (!username || !password) {
+    if (!username) {
       toast({
         title: "Login Error",
-        description: "Please enter both username and password.",
+        description: "Please enter a username.",
         variant: "destructive",
       });
       return;
     }
 
-    // For demonstration, check if the username is "admin" and password isn't empty.
-    if (username === 'admin' && password !== '') {
-      localStorage.setItem('user', 'admin');
+    // For demonstration, check if the username is "admin".
+    if (username === 'admin') {
+      localStorage.setItem('user', JSON.stringify({admin: true}));
       toast({
         title: "Login Successful",
         description: "Successfully logged in as admin.",
       });
       router.push('/admin');
     } else {
-      toast({
-        title: "Login Error",
-        description: "Invalid credentials. Please try again.",
-        variant: "destructive",
-      });
+      localStorage.setItem('user', JSON.stringify({admin: false}));
+       toast({
+         title: "Login Successful",
+         description: "Successfully logged in.",
+       });
+      router.push('/');
     }
   };
 

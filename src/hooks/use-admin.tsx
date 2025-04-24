@@ -7,34 +7,30 @@ function useAdmin() {
   useEffect(() => {
     if (typeof window !== 'undefined') {
       try {
-        const user = localStorage.getItem('user'); 
+        const user = localStorage.getItem('user');
         if (user) {
           try {
             const parsedUser = JSON.parse(user);
-            setIsAdmin(parsedUser.admin);
-            localStorage.setItem('user', JSON.stringify({ admin: parsedUser.admin }));
+            setIsAdmin(parsedUser?.admin || false); // Safely access admin property
           } catch (parseError) {
             console.error('Error parsing user data from localStorage:', parseError);
-            localStorage.setItem('user', JSON.stringify({ admin: false }));
             setIsAdmin(false);
           }
         } else {
-          localStorage.setItem('user', JSON.stringify({ admin: false }));
+          setIsAdmin(false);
         }
       } catch (error) {
         console.error('Error accessing localStorage:', error);
-        localStorage.setItem('user', JSON.stringify({ admin: false }));
         setIsAdmin(false);
-      }
-      finally {
+      } finally {
         setIsLoading(false);
       }
     } else {
       setIsLoading(false);
     }
-  }, []); 
+  }, []);
 
-  return { isAdmin, isLoading }; 
+  return { isAdmin, isLoading };
 }
 
 export { useAdmin };
