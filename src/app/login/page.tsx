@@ -13,7 +13,7 @@ const LoginPage = () => {
   const {toast} = useToast();
   const router = useRouter();
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
     // Basic validation
