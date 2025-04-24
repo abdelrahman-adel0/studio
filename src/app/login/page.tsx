@@ -1,6 +1,6 @@
 'use client';
 
-import {useState, useEffect} from 'react';
+import {useState} from 'react';
 import {useRouter} from 'next/navigation';
 import {Button} from '@/components/ui/button';
 import {Card, CardContent, CardHeader, CardTitle} from '@/components/ui/card';
@@ -12,20 +12,6 @@ const LoginPage = () => {
   const [password, setPassword] = useState('');
   const {toast} = useToast();
   const router = useRouter();
-
-  useEffect(() => {
-    // Check if the user is already logged in
-    const checkLoggedIn = () => {
-      const user = localStorage.getItem('user');
-      if (user === 'admin') {
-        router.push('/admin');
-      }
-    };
-
-    checkLoggedIn();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -43,11 +29,11 @@ const LoginPage = () => {
     // For demonstration, check if the username is "admin" and password isn't empty.
     if (username === 'admin' && password !== '') {
       localStorage.setItem('user', 'admin');
-      router.push('/admin');
       toast({
         title: "Login Successful",
         description: "Successfully logged in as admin.",
       });
+      router.push('/admin');
     } else {
       toast({
         title: "Login Error",
