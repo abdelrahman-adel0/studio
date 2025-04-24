@@ -34,6 +34,12 @@ const AdminPage = () => {
   }, []);
 
   useEffect(() => {
+    if (!isAdmin) {
+      router.push('/login');
+    }
+  }, [isAdmin, router]);
+
+  useEffect(() => {
     const loadMaintenanceMode = () => {
       const storedMaintenanceMode = localStorage.getItem('maintenanceMode');
       setMaintenanceMode(storedMaintenanceMode === 'true');
@@ -94,10 +100,6 @@ const AdminPage = () => {
   };
 
   if (!isAdmin) {
-    useEffect(() => {
-      router.push('/login');
-    }, [router]);
-
     return null;
   }
 
