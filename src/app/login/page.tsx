@@ -17,17 +17,31 @@ const LoginPage = () => {
     e.preventDefault();
 
     // Basic validation
-    if (!username) {
+    if (!username || !password) {
       toast({
         title: "Login Error",
-        description: "Please enter a username.",
+        description: "Please enter a username and password.",
         variant: "destructive",
       });
       return;
     }
 
-    // For demonstration, check if the username is "admin".
-    if (username === 'admin') {
+    if (password.length < 6) {
+       toast({
+        title: "Login Error",
+        description: "Password must be at least 6 characters long.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    // Check for admin username and password
+    if (username === 'admin' && password === 'password') {
+
+      // Correct admin credentials
+      //save the user data
+
+
       localStorage.setItem('user', JSON.stringify({ admin: true }));
       toast({
         title: "Login Successful",
