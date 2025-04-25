@@ -57,13 +57,14 @@ const AdminDashboardPage = () => {
   const toggleMaintenanceMode = async () => {
     setMaintenanceMode(prev => !prev);
      
-    try {
-      const response = await fetch('/api/admin/maintenance/toggle', { method: 'POST' });
-      if (!response.ok) throw new Error(`${response.status} - ${response.statusText}`);
-       toast({
-         title: "Maintenance Mode Updated",
-         description: `Maintenance mode is now ${!maintenanceMode ? 'enabled' : 'disabled'}.`,
-       })
+     try {
+         const response = await fetch('/api/admin/maintenance/toggle', { method: 'POST' });
+         if (!response.ok) throw new Error(`${response.status} - ${response.statusText}`);
+         localStorage.setItem('maintenanceMode', (!maintenanceMode).toString());
+         toast({
+             title: "Maintenance Mode Updated",
+             description: `Maintenance mode is now ${!maintenanceMode ? 'enabled' : 'disabled'}.`,
+         })
     } catch (apiError: any) {
       console.error('Failed to toggle maintenance mode', apiError);
       setMaintenanceMode(prev => !prev);
