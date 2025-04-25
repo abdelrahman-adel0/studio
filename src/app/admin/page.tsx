@@ -138,12 +138,6 @@ const AdminDashboardPage = () => {
           )}
           <div className="p-4 w-full max-w-7xl">
             <div className="absolute top-4 right-4">
-                <Button
-                    onClick={() => {
-                        localStorage.clear();
-                        window.location.href = "/";
-                    }}>Logout</Button>
-            </div>
               <Card className="mt-4">
                   <CardHeader>
                       <CardTitle>Maintenance Mode</CardTitle>
