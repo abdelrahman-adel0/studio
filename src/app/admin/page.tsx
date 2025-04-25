@@ -8,6 +8,7 @@ import { Info } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
 import { useAdmin } from '@/hooks/use-admin';
 import { Button } from '@/components/ui/button';
+import { useRouter } from 'next/navigation';
 
 interface Stats {
     events: number;
@@ -21,6 +22,7 @@ const AdminDashboardPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const isAdmin = useAdmin();
+  const router = useRouter();
 
   useEffect(() => {
     const fetchStats = async () => {
@@ -72,6 +74,11 @@ const AdminDashboardPage = () => {
      }
    
   };
+
+    const handleLogout = () => {
+        localStorage.removeItem('user');
+        router.push('/');
+    };
   
   if (!isAdmin.isAdmin) {  
     return (
@@ -82,10 +89,11 @@ const AdminDashboardPage = () => {
   }
   
   return (
-    <div className="flex flex-col items-center justify-start min-h-screen py-2">
+      <div className="flex flex-col items-center justify-start min-h-screen py-2">
         <h1 className="text-2xl font-bold mb-4">Admin Dashboard</h1>
+          <Button onClick={handleLogout} className='m-4'>Logout</Button>
 
-        {error && (
+          {error && (
         <Alert variant="destructive">
           <Info className="h-4 w-4" />
           <AlertTitle>Error</AlertTitle>
@@ -93,50 +101,42 @@ const AdminDashboardPage = () => {
       </Alert>
       )}
 
-      {isAdmin.isLoading ? (
-          <div className="absolute top-4 right-4">
-          <Button
-              onClick={() => {
-                  localStorage.clear();
-                  window.location.href = "/";
-              }}>Logout</Button>
-          </div>
-      ) : (
-        <div>Loading stats...</div>
-      ) : (
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 p-4 w-full max-w-7xl">
-          <Card>
-            <CardHeader>
-              <CardTitle>Total Events</CardTitle>
-              <CardDescription>Number of events</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">{stats?.events ?? 'N/A'}</div>
-            </CardContent>
-          </Card>
+          {isAdmin.isLoading ? (
+              <div>Loading stats...</div>
+          ) : (
+              <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 p-4 w-full max-w-7xl">
+                  <Card>
+                      <CardHeader>
+                          <CardTitle>Total Events</CardTitle>
+                          <CardDescription>Number of events</CardDescription>
+                      </CardHeader>
+                      <CardContent>
+                          <div className="text-2xl font-bold">{stats?.events ?? 'N/A'}</div>
+                      </CardContent>
+                  </Card>
 
-          <Card>
-            <CardHeader>
-              <CardTitle>Total Orders</CardTitle>
-              <CardDescription>Number of orders</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">{stats?.orders ?? 'N/A'}</div>
-            </CardContent>
-          </Card>
+                  <Card>
+                      <CardHeader>
+                          <CardTitle>Total Orders</CardTitle>
+                          <CardDescription>Number of orders</CardDescription>
+                      </CardHeader>
+                      <CardContent>
+                          <div className="text-2xl font-bold">{stats?.orders ?? 'N/A'}</div>
+                      </CardContent>
+                  </Card>
 
-          <Card>
-            <CardHeader>
-              <CardTitle>Total Users</CardTitle>
-              <CardDescription>Number of registered users</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">{stats?.users ?? 'N/A'}</div>
-            </CardContent>
-          </Card>
-        </div>
-      )}
-        {!isAdmin.isLoading && (
+                  <Card>
+                      <CardHeader>
+                          <CardTitle>Total Users</CardTitle>
+                          <CardDescription>Number of registered users</CardDescription>
+                      </CardHeader>
+                      <CardContent>
+                          <div className="text-2xl font-bold">{stats?.users ?? 'N/A'}</div>
+                      </CardContent>
+                  </Card>
+              </div>
+          )}
+          <div className="p-4 w-full max-w-7xl">
             <div className="absolute top-4 right-4">
                 <Button
                     onClick={() => {
@@ -144,32 +144,30 @@ const AdminDashboardPage = () => {
                         window.location.href = "/";
                     }}>Logout</Button>
             </div>
-        )}
-        <div className="p-4 w-full max-w-7xl">
-            <Card className="mt-4">
-                <CardHeader>
-                <CardTitle>Maintenance Mode</CardTitle>
-                <CardDescription>
-                    Enable or disable maintenance mode for the application.
-                </CardDescription>
-                </CardHeader>
-                <CardContent className="flex items-center space-x-4">
-                <Switch id="maintenance" checked={maintenanceMode} onCheckedChange={toggleMaintenanceMode} />
-                <label htmlFor="maintenance" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-                    {maintenanceMode ? 'Enabled' : 'Disabled'}
-                </label>
-                </CardContent>
-            </Card>
-            {maintenanceMode && (
-                <Alert variant="destructive" className="mt-4">
-                    <Info className="h-4 w-4" />
-                    <AlertTitle>Maintenance Mode Active</AlertTitle>
-                    <AlertDescription>
-                        The application is currently in maintenance mode. Users may experience disruptions.
-                    </AlertDescription>
-                </Alert>
-            )}
-        </div>
+              <Card className="mt-4">
+                  <CardHeader>
+                      <CardTitle>Maintenance Mode</CardTitle>
+                      <CardDescription>
+                          Enable or disable maintenance mode for the application.
+                      </CardDescription>
+                  </CardHeader>
+                  <CardContent className="flex items-center space-x-4">
+                      <Switch id="maintenance" checked={maintenanceMode} onCheckedChange={toggleMaintenanceMode} />
+                      <label htmlFor="maintenance" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                          {maintenanceMode ? 'Enabled' : 'Disabled'}
+                      </label>
+                  </CardContent>
+              </Card>
+              {maintenanceMode && (
+                  <Alert variant="destructive" className="mt-4">
+                      <Info className="h-4 w-4" />
+                      <AlertTitle>Maintenance Mode Active</AlertTitle>
+                      <AlertDescription>
+                          The application is currently in maintenance mode. Users may experience disruptions.
+                      </AlertDescription>
+                  </Alert>
+              )}
+          </div>
 
 
     </div>
