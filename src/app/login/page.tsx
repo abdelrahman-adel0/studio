@@ -17,17 +17,24 @@ const LoginPage = () => {
     e.preventDefault();
 
     // Basic validation
-    if (!username || !password) {
-      toast({
-        title: "Login Error",
-        description: "Please enter a username and password.",
-        variant: "destructive",
-      });
-      return;
+    if (!username) {
+        toast({
+            title: "Login Error",
+            description: "Please enter a username.",
+            variant: "destructive",
+        });
+        return;
     }
-
+    if (!password) {
+        toast({
+            title: "Login Error",
+            description: "Please enter a password.",
+            variant: "destructive",
+        });
+        return;
+    }
     if (password.length < 6) {
-       toast({
+        toast({
         title: "Login Error",
         description: "Password must be at least 6 characters long.",
         variant: "destructive",
@@ -49,12 +56,12 @@ const LoginPage = () => {
       });
       router.push('/admin');
     } else {
-      localStorage.setItem('user', JSON.stringify({ admin: false }));
-       toast({
-         title: "Login Successful",
-         description: "Successfully logged in.",
-       });
-      router.push('/');
+        toast({
+            title: "Login Error",
+            description: "Invalid username or password.",
+            variant: "destructive",
+        });
+
     }
   };
 
