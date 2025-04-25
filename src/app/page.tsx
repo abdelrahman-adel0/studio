@@ -12,11 +12,14 @@ export default function Home() {
   const router = useRouter();
 
   useEffect(() => {
-    // Load maintenance mode status from local storage on initial load
-    const storedMaintenanceMode = localStorage.getItem('maintenanceMode');
-    if (storedMaintenanceMode) {
-      setMaintenanceMode(storedMaintenanceMode === 'true');
-    }
+    const timeoutId = setTimeout(() => {
+      // Load maintenance mode status from local storage on initial load
+      const storedMaintenanceMode = localStorage.getItem('maintenanceMode');
+      if (storedMaintenanceMode) {
+        setMaintenanceMode(storedMaintenanceMode === 'true');
+      }
+    }, 100);
+      return () => clearTimeout(timeoutId);
   }, []);
 
   return (
