@@ -45,6 +45,7 @@ const LoginPage = () => {
     // Check for admin username and password
     if (username === 'admin' && password === 'password') {
 
+      console.log("Admin login successful");
       // Correct admin credentials
       //save the user data
 
