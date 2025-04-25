@@ -90,20 +90,20 @@ const AdminDashboardPage = () => {
   
   return (
     <div className="flex flex-col items-center justify-start min-h-screen py-2">
-        <h1 className="text-2xl font-bold mb-4">Admin Dashboard</h1>
-          <Button onClick={handleLogout} className='m-4'>Logout</Button>
-      
-          {error && (
+      <h1 className="text-2xl font-bold mb-4">Admin Dashboard</h1>
+      <Button onClick={handleLogout} className='m-4'>Logout</Button>
+
+      {error && (
         <Alert variant="destructive">
           <Info className="h-4 w-4" />
           <AlertTitle>Error</AlertTitle>
-        <AlertDescription>{error}</AlertDescription>
-      </Alert>
+          <AlertDescription>{error}</AlertDescription>
+        </Alert>
       )}
 
-          {isAdmin.isLoading ? (
-              <div>Loading stats...</div>
-          ) : (
+      {isAdmin.isLoading ? (
+        <div>Loading stats...</div>
+      ) : (
               <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 p-4 w-full max-w-7xl">
                   <Card>
                       <CardHeader>
@@ -135,23 +135,23 @@ const AdminDashboardPage = () => {
                       </CardContent>
                   </Card>
               </div>
-          )}
-          <div className="p-4 w-full max-w-7xl">
-            <Card className="mt-4">
-                  <CardHeader>
-                      <CardTitle>Maintenance Mode</CardTitle>
-                      <CardDescription>
-                          Enable or disable maintenance mode for the application.
-                      </CardDescription>
-                  </CardHeader>
-                  <CardContent className="flex items-center space-x-4">
-                      <Switch id="maintenance" checked={maintenanceMode} onCheckedChange={toggleMaintenanceMode} />
-                      <label htmlFor="maintenance" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-                          {maintenanceMode ? 'Enabled' : 'Disabled'}
-                      </label>
-                  </CardContent>
-              </Card>
-              {maintenanceMode && (
+      )}
+      <div className="p-4 w-full max-w-7xl">
+        <Card className="mt-4">
+          <CardHeader>
+            <CardTitle>Maintenance Mode</CardTitle>
+            <CardDescription>
+              Enable or disable maintenance mode for the application.
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="flex items-center space-x-4">
+            <Switch id="maintenance" checked={maintenanceMode} onCheckedChange={toggleMaintenanceMode} />
+            <label htmlFor="maintenance" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+              {maintenanceMode ? 'Enabled' : 'Disabled'}
+            </label>
+          </CardContent>
+        </Card>
+        {maintenanceMode && (
                   <Alert variant="destructive" className="mt-4">
                       <Info className="h-4 w-4" />
                       <AlertTitle>Maintenance Mode Active</AlertTitle>
@@ -160,10 +160,9 @@ const AdminDashboardPage = () => {
                       </AlertDescription>
                   </Alert>
               )}        
-
-
+      </div>
     </div>
-  );
+ );
 };
 
 export default AdminDashboardPage;
