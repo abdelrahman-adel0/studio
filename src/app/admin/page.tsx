@@ -89,10 +89,10 @@ const AdminDashboardPage = () => {
   }
   
   return (
-      <div className="flex flex-col items-center justify-start min-h-screen py-2">
+    <div className="flex flex-col items-center justify-start min-h-screen py-2">
         <h1 className="text-2xl font-bold mb-4">Admin Dashboard</h1>
           <Button onClick={handleLogout} className='m-4'>Logout</Button>
-
+      
           {error && (
         <Alert variant="destructive">
           <Info className="h-4 w-4" />
@@ -137,8 +137,7 @@ const AdminDashboardPage = () => {
               </div>
           )}
           <div className="p-4 w-full max-w-7xl">
-            <div className="absolute top-4 right-4">
-              <Card className="mt-4">
+            <Card className="mt-4">
                   <CardHeader>
                       <CardTitle>Maintenance Mode</CardTitle>
                       <CardDescription>
@@ -160,8 +159,7 @@ const AdminDashboardPage = () => {
                           The application is currently in maintenance mode. Users may experience disruptions.
                       </AlertDescription>
                   </Alert>
-              )}
-          </div>
+              )}        
 
 
     </div>
