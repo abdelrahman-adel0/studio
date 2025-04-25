@@ -7,7 +7,7 @@ import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Info } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
 import { useAdmin } from '@/hooks/use-admin';
-
+import { Button } from '@/components/ui/button';
 
 interface Stats {
     events: number;
@@ -51,7 +51,7 @@ const AdminDashboardPage = () => {
         setLoading(false);
       }
     };
-    if(isAdmin.isAdmin) fetchStats();
+    if (isAdmin.isAdmin) fetchStats();
   }, [isAdmin.isAdmin]); 
 
   const toggleMaintenanceMode = async () => {
@@ -94,6 +94,14 @@ const AdminDashboardPage = () => {
       )}
 
       {isAdmin.isLoading ? (
+          <div className="absolute top-4 right-4">
+          <Button
+              onClick={() => {
+                  localStorage.clear();
+                  window.location.href = "/";
+              }}>Logout</Button>
+          </div>
+      ) : (
         <div>Loading stats...</div>
       ) : (
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 p-4 w-full max-w-7xl">
@@ -128,6 +136,15 @@ const AdminDashboardPage = () => {
           </Card>
         </div>
       )}
+        {!isAdmin.isLoading && (
+            <div className="absolute top-4 right-4">
+                <Button
+                    onClick={() => {
+                        localStorage.clear();
+                        window.location.href = "/";
+                    }}>Logout</Button>
+            </div>
+        )}
         <div className="p-4 w-full max-w-7xl">
             <Card className="mt-4">
                 <CardHeader>
